@@ -42,7 +42,6 @@
             fetch("http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=9badf999e142be26706362d4317eb579&units=metric")
                 .then(response => response.json())
                 .then(data => {
-                    // console.log(data);
                     document.getElementById("city-name-display").innerText = data.name;
                     const oldTemparature = document.getElementById("temperature").innerText;
                     let updatedTemparature = parseFloat(oldTemparature);
@@ -76,12 +75,12 @@
                         case "Drizzle":
                             newImage.setAttribute('src', "http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
                             break;
-                        default:
-                            console.log("RainBow");
+                        // default:
+                        //     console.log("RainBow");
                     }
-                })
+                });
             document.getElementById("city-name-input").value = "";
-        })
+        });
     </script>
 </body>
 
