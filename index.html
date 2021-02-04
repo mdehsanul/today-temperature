@@ -22,20 +22,67 @@
     <div class="container">
         <form class="col-md-6 m-auto py-5">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <input id="city-name-input" type="text" class="form-control"
+                    placeholder="Enter a location for Weather ...">
                 <div class="input-group-append">
-                    <button type="button" class="btn btn-danger">Search</button>
+                    <button id="search-button" type="button" class="btn btn-danger">Search</button>
                 </div>
             </div>
         </form>
         <div class="weather-status text-white text-center">
-            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
-            <h1>Dhaka</h1>
-            <h3><span>38.06</span>&deg;C</h3>
-            <h1 class="lead">Clouds</h1>
+            <img id="image" src="https://openweathermap.org/img/wn/01d@2x.png" alt="">
+            <h1 id="city-name-display">Dhaka</h1>
+            <h3><span id="temperature">38.06</span>&deg;C</h3>
+            <h1 id="weather-condition" class="lead">Clouds</h1>
         </div>
     </div>
-
+    <script>
+        document.getElementById("search-button").addEventListener("click", function () {
+            const cityName = document.getElementById("city-name-input").value;
+            fetch("http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=9badf999e142be26706362d4317eb579&units=metric")
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data);
+                    document.getElementById("city-name-display").innerText = data.name;
+                    const oldTemparature = document.getElementById("temperature").innerText;
+                    let updatedTemparature = parseFloat(oldTemparature);
+                    updatedTemparature = data.main.temp;
+                    document.getElementById("temperature").innerText = updatedTemparature;
+                    const weatherCondition = document.getElementById("weather-condition").innerText = data.weather[0].main;
+                    const newImage = document.getElementById("image");
+                    const iconCode = data.weather[0].icon;
+                    switch (weatherCondition) {
+                        case "Clear":
+                            newImage.setAttribute('src', "http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
+                            break;
+                        case "Clouds":
+                            newImage.setAttribute('src', "http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
+                            break;
+                        case "Rain":
+                            newImage.setAttribute('src', "http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
+                            break;
+                        case "Thunderstorm":
+                            newImage.setAttribute('src', "http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
+                            break;
+                        case "Snow":
+                            newImage.setAttribute('src', "http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
+                            break;
+                        case "Mist":
+                            newImage.setAttribute('src', "http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
+                            break;
+                        case "Haze":
+                            newImage.setAttribute('src', "http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
+                            break;
+                        case "Drizzle":
+                            newImage.setAttribute('src', "http://openweathermap.org/img/wn/" + iconCode + "@2x.png");
+                            break;
+                        default:
+                            console.log("RainBow");
+                    }
+                })
+            document.getElementById("city-name-input").value = "";
+        })
+    </script>
 </body>
 
 </html>
